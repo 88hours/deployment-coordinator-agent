@@ -116,12 +116,19 @@ class DeploymentAgent:
 
     def _reason(self, state: AgentState) -> tuple[str, dict[str, Any]]:
         """Call Claude with the current state; return the chosen tool name and inputs."""
+        next_tool = {
+            "starting": "clone_repo",
+            "building": "build_image",
+            "pushing": "push_image",
+            "deploying": "deploy_service",
+        }[state.current_status]
+
         message = self.client.messages.create(
             model=self.model,
             max_tokens=1024,
             system=SYSTEM_PROMPT,
             tools=TOOLS,
-            tool_choice={"type": "any"},
+            tool_choice={"type": "tool", "name": next_tool},
             messages=[{"role": "user", "content": self._state_to_prompt(state)}],
         )
 
