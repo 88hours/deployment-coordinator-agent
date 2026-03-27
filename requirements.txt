@@ -2,3 +2,4 @@ anthropic
 boto3
 docker
 gitpython
+python-dotenv
