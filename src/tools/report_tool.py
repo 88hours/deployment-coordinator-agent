@@ -2,8 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-if TYPE_CHECKING:
-    from src.agent.state import AgentState
+from src.agent.state import AgentState
 
 
 def report_tool(state: AgentState) -> str:
